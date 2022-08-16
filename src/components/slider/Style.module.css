@@ -1,0 +1,63 @@
+.price_input {
+          display: flex;
+          align-items: center;
+          margin-top: 1rem;
+          gap: 0.2rem;
+
+
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+}
+
+.field input {
+          text-align: center;
+}
+
+.slider {
+          height: 2px;
+          background: rgb(182, 181, 181);
+          border-radius: 5px;
+          margin-top: 1rem;
+          position: relative;
+}
+
+.slider .progres {
+          height: 2px;
+          position: absolute;
+          border-radius: 5px;
+          background: #050505;
+
+
+}
+
+.range_input {
+          position: relative;
+}
+
+.range_input input {
+          position: absolute;
+          height: 2px;
+          border: none;
+          top: -3px;
+          -webkit-appearance: none;
+          background: transparent;
+          outline: none;
+          pointer-events: none;
+          width: 100%;
+          cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-thumb {
+          background: black;
+          height: 15px;
+          width: 15px;
+          border-radius: 50%;
+          -webkit-appearance: none;
+          pointer-events: auto;
+
+
+}

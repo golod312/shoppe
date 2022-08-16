@@ -1,46 +1,65 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Card from 'react-bootstrap/Card'
 import { Button, Container, Row, Col } from 'react-bootstrap'
-import { addToBasket } from '../../slice/goodsSlice'
+import { addToBasket, getGoodsItems } from '../../slice/goodsSlice'
+
 function Producs() {
-          const { goodsItems } = useSelector(store => store.goods)
-          const dispatch = useDispatch()
+  const { goodsItems, isLoading } = useSelector(store => store.goods)
+  const dispatch = useDispatch()
+
+
+  useEffect(() => {
+    dispatch(getGoodsItems())
+  }, [])
 
 
 
-          return (
+
+  if (isLoading) {
+    return (
+      <div>
+        <h1>Loading...</h1>
+      </div>
+    )
+  }
 
 
 
-                    <Container fluid>
 
-                              <Row style={{ marginLeft: '2rem', marginRight: '0' }}>
-                                        {goodsItems.slice(0, 6).map(item =>
-                                                  <Col key={item.id} gx={0}>
-                                                            <Card style={{ width: '18rem' }} >
-                                                                      <Card.Img variant="top" src={item.img[0]} />
-                                                                      <Card.Body>
-                                                                                <Card.Title>{item.name}</Card.Title>
-                                                                                <Card.Text style={{ color: '#A18A68' }}>
-                                                                                          $ {item.price}.00
-                                                                                </Card.Text>
-                                                                                <div className='item_button'>
-                                                                                          <Button variant='outline-success' size='sm' onClick={() => dispatch(addToBasket(item.id))}>Buy now!</Button>
-                                                                                          <Button variant='outline-secondary' size='sm'>More info</Button>
-                                                                                </div>
-
-                                                                      </Card.Body>
-                                                            </Card>
+  return (
 
 
-                                                  </Col>
+    <Container fluid style={{ marginLeft: '0', marginRight: '0' }}>
 
-                                        )}
-                              </Row>
-                    </Container>
+      <Row style={{ marginLeft: '0', marginRight: '0' }} className='g-2'>
+        {goodsItems.map(item =>
+          <Col key={item.id} gx={0} className='col-md-4 col-lg-4'>
+            <Card >
+              <Card.Img variant="top" src={item.img[0]} />
+              <Card.Body>
+                <Card.Title>{item.name}</Card.Title>
+                <Card.Text style={{ color: '#A18A68' }}>
+                  $ {item.price}.00
+                </Card.Text>
+                <div className='item_button'>
+                  <Button variant='outline-success' size='sm' onClick={() => dispatch(addToBasket(item.id))}>Buy now!</Button>
+                  <Button variant='outline-secondary' size='sm'>More info</Button>
+                </div>
 
-          )
+              </Card.Body>
+            </Card>
+
+
+          </Col>
+
+        )}
+      </Row>
+    </Container>
+
+
+
+  )
 }
 
 export default Producs

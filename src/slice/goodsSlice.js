@@ -1,27 +1,55 @@
 
 import data from './data'
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import shuffleGoods from 'selectors'
 
 
-const mockData = data
+
+
+
+
+
+export const getGoodsItems = createAsyncThunk(
+    'goods/fetchGoods',
+    async (url = 'http://localhost:3000/data?_page=1&_limit=6') => {
+        return fetch(url)
+            .then((resp) => resp.json())
+            .catch((err) => console.log(err))
+
+    }
+)
+
 
 const goodsSlice = createSlice({
-          name: "goods",
-          initialState: {
-                    goodsItems: mockData,
-                    shuffleGoods: shuffleGoods(mockData),
-                    isLoading: true,
-                    goodsBasket: [],
+    name: "goods",
+    initialState: {
+        goodsItems: [],
+        shuffleGoods: [],
+        isLoading: true,
+        goodsBasket: [],
 
-          },
-          reducers: {
-                    addToBasket(state, action) {
+    },
+    reducers: {
+        addToBasket(state, action) {
 
-                              console.log(action.payload)
-                              state.goodsBasket.push(action.payload)
-                    }
-          }
+            console.log(action.payload)
+            state.goodsBasket.push(action.payload)
+        }
+    },
+    extraReducers: {
+        [getGoodsItems.pending]: (state) => {
+            state.isLoading = true
+        },
+        [getGoodsItems.fulfilled]: (state, action) => {
+            console.log(action.payload);
+            state.goodsItems = action.payload
+            state.shuffleGoods = shuffleGoods(action.payload)
+            state.isLoading = false
+        },
+        [getGoodsItems.rejected]: (state) => {
+            state.isLoading = false
+        }
+    }
 
 })
 

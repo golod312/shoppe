@@ -55,11 +55,11 @@ const Header = () => {
                                                   </Form>
 
                                         </Navbar.Collapse>
-                                        <Nav className='header__icons'>
+                                        <div className='header__icons'>
                                                   <BsCart2 size='1.2rem' />
                                                   <p>{goodsBasket.length}</p>
                                                   <FiUser size='1.2rem' />
-                                        </Nav>
+                                        </div>
                               </Container>
                     </Navbar>
 
